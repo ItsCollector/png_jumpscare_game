@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
 
-	void Start()
+	private void Start()
 	{
         controller = GetComponent<CharacterController>();
 	}
