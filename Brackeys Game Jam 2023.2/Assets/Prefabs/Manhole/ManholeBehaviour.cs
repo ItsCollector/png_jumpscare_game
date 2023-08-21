@@ -7,7 +7,7 @@ using TMPro;
 public class ManholeBehaviour : MonoBehaviour
 {
 	[Header("References")]
-	public TextMeshProUGUI instructionUI;
+	[SerializeField] private TextMeshProUGUI instructionUI;
 	public string manholeText = "[E] Enter manhole";
 	public GameObject player;
 
@@ -16,22 +16,17 @@ public class ManholeBehaviour : MonoBehaviour
 	public float minDistance = 2.5f;
 	public bool inRange = false;
 
-	private void Start()
-	{
-		UIManager.Instance.UpdateUI(instructionUI, "");
-	}
-
 	private void Update()
 	{
 		playerDistance = Vector3.Distance(transform.position, player.transform.position);
 		Debug.DrawLine(transform.position, player.transform.position, Color.green);
 
-		if (playerDistance > minDistance)
+		if (playerDistance > minDistance && inRange == true)
 		{
 			UIManager.Instance.UpdateUI(instructionUI, "");
 			inRange = false;
 		}
-		else
+		else if (playerDistance <= minDistance && inRange == false)
 		{
 			UIManager.Instance.UpdateUI(instructionUI, manholeText);
 			inRange = true;
