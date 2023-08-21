@@ -6,14 +6,19 @@ using TMPro;
 
 public class ManholeBehaviour : MonoBehaviour
 {
-	public TextMeshProUGUI manholeText;
+	[Header("References")]
+	public TextMeshProUGUI instructionUI;
+	public string manholeText = "[E] Enter manhole";
 	public GameObject player;
+
+	[Header("Variables")]
 	public float playerDistance;
 	public float minDistance = 2.5f;
+	public bool inRange = false;
 
 	private void Start()
 	{
-		manholeText.enabled = false;
+		UIManager.Instance.UpdateUI(instructionUI, "");
 	}
 
 	private void Update()
@@ -23,11 +28,18 @@ public class ManholeBehaviour : MonoBehaviour
 
 		if (playerDistance > minDistance)
 		{
-			manholeText.enabled = false;
+			UIManager.Instance.UpdateUI(instructionUI, "");
+			inRange = false;
 		}
 		else
 		{
-			manholeText.enabled = true;
+			UIManager.Instance.UpdateUI(instructionUI, manholeText);
+			inRange = true;
+		}
+
+		if (Input.GetKey(KeyCode.E) && inRange)
+		{
+			SceneManager.LoadScene("Sewer");
 		}
 	}
 }
